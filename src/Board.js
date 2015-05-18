@@ -78,13 +78,45 @@
     // --------------------------------------------------------------
     //
     // test if a specific row on this board contains a conflict
+
+    /*
+    board.rows -> returns array of n length
+    board.get(num) -> returns rows[num]
+    board.get('n') -> returns width of board
+    board.toggle(1, 2) -> changes
+     */
     hasRowConflictAt: function(rowIndex) {
+      var pieces = 0;
+      var size = this.get('n');
+      console.log("inside has row conflict");
+      for (var i = 0; i < size; i++) {
+        if (this.get(rowIndex)[i] === 1) {
+          pieces++;
+        }
+      }
+      if (pieces > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any rows on this board contain conflicts
+    // can you reference hasRowConflictAt in this function?
     hasAnyRowConflicts: function() {
-      return false; // fixme
+       var size = this.get('n');
+       for(var i = 0; i < size; i++){
+        var pieces = 0;
+          for (var j = 0; j < size; j++) {
+            if (this.get(i)[j] === 1) {
+              pieces++;
+            }
+          }
+        if (pieces > 1) {
+          return true;
+        }
+
+       }
+       return false;
     },
 
 
