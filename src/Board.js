@@ -163,35 +163,62 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var row;
+      var col = majorDiagonalColumnIndexAtFirstRow;
+      if (majorDiagonalColumnIndexAtFirstRow < 0) {
+        row = Math.abs(majorDiagonalColumnIndexAtFirstRow);
+        col = 0;
+      } else {
+        row = 0;
+      }
+      console.log(this.get(row))
       var size = this.get('n');
-      var row = size-2;
-      var col = 0;
-      for(var i = 0; i < (2*size-3); i++){
       var pieces = 0;
-        for(var j=0; j<size-row; j++){
-          if (this.get(row)[col] === 1) {
-            pieces++;
-          }
-          row++;
-          col++;
+      for (var i = 0; i < size - Math.abs(majorDiagonalColumnIndexAtFirstRow); i++) {
+        if(this.get(row)[col] === 1) {
+          pieces++;
         }
-        if (pieces > 1) {
-          return true;
-        }
-        if(col < size-1){
-          row = size-2 - i + 1;
-          col = 0;
-        } else{
-          col = i-1 - size + 2;
-          row = 0;
-        }
-
+      }
+      if (pieces > 1) {
+        return true;
       }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      var size = this.get('n');
+      var row = size-2;
+      var col = 0;
+      var testLength = (2*size)-3;
+      var truthy = false;
+      for (var i = 0; i < testLength; i++) {
+        var pieces = 0;
+        var limit = size-(row+col);
+        for (var j=0; j < limit; j++) {
+          if(this.get(row)[col] === 1) {
+            pieces++;
+          }
+          row++;
+          col++;
+        }
+
+        if (pieces > 1) {
+          return true;
+        }
+        if (col < size && !truthy) {
+          row = (size - 3 - i);
+          col = 0;
+        }
+        else {
+          col = (i - size + 3);
+          row = 0;
+          truthy = true;
+
+          //change j limit
+        }
+
+      }
       return false; // fixme
     },
 
