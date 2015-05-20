@@ -93,6 +93,9 @@ window.countNQueensSolutions = function(n) {
   var makeSolution = function(board, p){
     for(var i = 0; i < n; i++){
       //make sure current board is valid, because prev. correct has pieces
+      if(i===0 && p===0){
+        i++;
+      }
       if(i > 0){
         board.rows()[p][i-1] = 0;
         for(var j = p+1; j < n; j++){
@@ -103,6 +106,7 @@ window.countNQueensSolutions = function(n) {
       }
       //make decision
       board.rows()[p][i] = 1;
+
       if(board.hasAnyQueensConflicts()){
         board.rows()[p][i] = 0;
       } else{

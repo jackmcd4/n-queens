@@ -281,7 +281,7 @@
       } else{
           truthy = true;
           row = 0;
-          col = size - i;
+          col = (2*size)-4-i;
       }
 
       }
